@@ -1,0 +1,11 @@
+AI Coworker
+Copyright 2026 Let's Data Science
+Built by LDS Team.
+https://letsdatascience.com
+
+LDS application and teaching code are licensed under Apache License 2.0.
+Hermes Agent is a separate Nous Research project, licensed under MIT.
+This application integrates with Hermes Agent; it is not an official Nous Research product.
+Hermes source, dependencies, API credentials, user notes, reports and private state
+are not included in the LDS release package. Upstream licenses remain applicable.
+LDS names and logos are not licensed for implied endorsement.

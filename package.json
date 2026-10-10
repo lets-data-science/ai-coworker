@@ -1,0 +1,19 @@
+{
+  "name": "lds-ai-coworker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "setup:hermes": "node scripts/install-hermes.mjs",
+    "start": "node --env-file-if-exists=.env.local server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm test && node --check ui/app.js && node --check server.mjs",
+    "check:brief": "node --test test/brief.test.mjs",
+    "check:skills": "node --test test/skills.test.mjs",
+    "check:result": "node --test test/result.test.mjs",
+    "restore": "node scripts/restore.mjs"
+  },
+  "license": "Apache-2.0"
+}

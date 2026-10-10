@@ -1,0 +1,23 @@
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { HERMES_REVISION } from '../lib/hermes.mjs';
+const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const runtime = path.join(root, '.runtime');
+const source = path.join(runtime, 'hermes-agent');
+const venv = path.join(runtime, 'venv');
+const python = path.join(venv, process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
+mkdirSync(runtime, { recursive: true });
+const env = { ...process.env, UV_PYTHON_INSTALL_DIR: path.join(runtime, 'python'), UV_CACHE_DIR: path.join(runtime, 'uv-cache') };
+function run(command, args) { const result = spawnSync(command, args, { env, stdio: 'inherit', cwd: root, shell: false }); if (result.error || result.status !== 0) { console.error(`Setup stopped at ${command}. Install current Git and uv, check network access, then rerun this command. Existing data was kept.`); process.exit(1); } }
+if (!existsSync(path.join(source, '.git'))) run('git', ['clone', '--filter=blob:none', '--no-checkout', 'https://github.com/NousResearch/hermes-agent.git', source]);
+run('git', ['-C', source, 'fetch', '--depth', '1', 'origin', HERMES_REVISION]);
+run('git', ['-C', source, 'checkout', '--detach', HERMES_REVISION]);
+run('uv', ['python', 'install', '3.14']);
+if (!existsSync(python)) run('uv', ['venv', '--python', '3.14', venv]);
+const version = spawnSync(python, ['-c', 'import sys; assert sys.version_info.releaselevel == \"final\", \"Stable Python 3.14 is required. Update uv and recreate .runtime/venv.\"'], { stdio: 'inherit' });
+if (version.status !== 0) process.exit(1);
+run('uv', ['pip', 'install', '--python', python, '-r', path.join(root, 'requirements.lock')]);
+run('uv', ['pip', 'install', '--python', python, '--no-deps', '-e', source]);
+console.log('Hermes is installed in .runtime/. Add GEMINI_API_KEY to .env.local, then run npm start.');
