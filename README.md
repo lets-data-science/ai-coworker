@@ -2,17 +2,24 @@
 
 An LDS build-along project: build a local task desk around the **real Hermes Agent** runtime. Give it a brief and source notes, review the report and tool history, then turn a correction into a reusable skill you approve.
 
-The local app is a learning project, not the hosted LDS website. Version **1.0.0**. Built by LDS Team.
+The local app is a learning project, not the hosted LDS website. Version **1.0.1**. Built by LDS Team.
+
+![AI Coworker showing a cited report, its activity trail and a saved skill](docs/media/preview.gif)
+
+**Build it step by step:** the free seven-step guide on [Let's Data Science](https://letsdatascience.com/projects/ai-coworker) walks through each piece, with checks you can run, hints and screen recordings.
 
 ## Start here
 
 Requirements: Node.js 22.13+, Git, current [uv](https://docs.astral.sh/uv/getting-started/installation/), and access to a Gemini model. The Hermes environment uses **stable Python 3.14**; setup installs it locally when needed. Network access is needed for installation and model calls. Windows PowerShell, macOS, and Linux commands are the same.
 
 ```bash
+uv self update
 npm ci
 npm run setup
 npm run setup:hermes
 ```
+
+Update uv first: an older uv picks a Python 3.14 release candidate and Hermes setup stops with instructions. If you installed uv with Homebrew or pip, update it that way instead. Setup keeps Python and its cache inside `.runtime/`.
 
 Open `.env.local` in your editor. Add your own `GEMINI_API_KEY`, then:
 
@@ -21,6 +28,8 @@ npm start
 ```
 
 Open **http://localhost:3081**. Follow [the seven-step guide](docs/BUILD.md). If another app uses 3081, change `PORT` in `.env.local` and restart. No application framework or build service is required for the UI.
+
+No notes of your own yet? Use the three fictional notes in [`samples/`](samples/README.md). One of them contains a line aimed at AI assistants, so you can check that your report treats it as evidence, not as an instruction.
 
 - `npm test` runs offline unit/API tests. They use explicit test adapters, not paid model calls.
 - `npm run check` adds JavaScript syntax checks.
@@ -58,6 +67,7 @@ The skill library is this application's explicit, human-approved procedural memo
 | `server.mjs` | Local API, queue, storage, download, origin checks |
 | `ui/` | Responsive task desk, activity, report, source and skill views |
 | `requirements.lock` | Tested Python dependency pins |
+| `samples/` | Three fictional source notes for a first task |
 | `.runtime/` | Downloaded Hermes and Python runtime; excluded from releases |
 | `.local-data/` | Your local workspace; excluded from releases |
 

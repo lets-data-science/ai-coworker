@@ -4,7 +4,7 @@ Build a research assistant you can inspect. One task travels from supplied evide
 
 You need basic JavaScript, the ability to run terminal commands, Node.js 22.13 or newer, Git, current uv, and a Gemini key with model access. Budget about 3–4 hours for the code and review; first-time dependency downloads vary by connection. Python knowledge is helpful for reading the bridge but not required for the three learner exercises.
 
-Use source notes that you own or can share with your model provider. A small comparison of two project options is enough. Do not use personal or confidential information for a first exercise.
+Use source notes that you own or can share with your model provider. A small comparison of two project options is enough. Do not use personal or confidential information for a first exercise. No notes yet? Use the three fictional notes in `samples/`; its README gives a task title and requested output.
 
 ## 1. Understand the finished workflow
 
